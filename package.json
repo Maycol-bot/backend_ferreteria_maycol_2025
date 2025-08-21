@@ -1,0 +1,14 @@
+{
+  "name": "backend-ferreteria-maycol-2025",
+  "version": "1.0.0",
+  "description": "backend de ferreteria calero",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Maycol Calero",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
