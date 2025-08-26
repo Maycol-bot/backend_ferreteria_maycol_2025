@@ -1,8 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
-import rutasCategorias from '.routes/Categorias.routes.js';
-import { Types } from 'mysql2';
+import rutasCategorias from './src/routes/categorias.routes.js';
 
 const app = express();
 
@@ -16,9 +15,9 @@ app.use(express.urlencoded({limit: '10mb', extended: true}));
 
 app.use('/api', rutasCategorias);
 
-app.use((req. res. next) => {
+app.use((req, res, next) => {
     res.status(404).json({
-        menssage:'la ruta que ha especificadono se encuentra registrada.'
+        menssage: 'la ruta que ha especificadono se encuentra registrada.'
     });
 });
 
