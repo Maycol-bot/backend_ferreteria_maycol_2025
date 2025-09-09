@@ -7,3 +7,7 @@ import { obtenerDetalleCompras } from '../controllers/detalle_compras.controller
 routes.get('/detalle-compras', obtenerDetalleCompras);
 
 export default routes;
+
+
+// Ruta para obtener un detalle de compra por su ID
+routes.get('/detalle-compra/:id_detalle', obtenerDetalleCompras);

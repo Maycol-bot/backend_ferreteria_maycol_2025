@@ -7,3 +7,7 @@ import { obtenerProductos} from '../controllers/producto.controller.js';
 routes.get('/productos', obtenerProductos);
 
 export default routes;
+
+
+// Ruta para obtener un producto por su ID
+routes.get('/producto/:id_producto', obtenerProductos);

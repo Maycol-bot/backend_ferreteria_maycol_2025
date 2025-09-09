@@ -13,3 +13,21 @@ export const obtenerUsuarios = async (req, res) => {
         });
     }
 };
+
+
+export const obtenerUsuario = async (req, res) => {
+try {
+const id_usuario = req.params.id;
+const [result] = await pool.query('SELECT * FROM usuarios WHERE id_usuario = ?', [id_usuario]);
+if (result.length <= 0) {
+return res.status(404).json({
+mensaje: `Error al leer los datos. ID ${id_usuario} no encontrado.`
+});
+}
+res.json(result[0]);
+} catch (error) {
+return res.status(500).json({
+mensaje: 'Ha ocurrido un error al leer los datos de los usuarios.'
+});
+}
+};

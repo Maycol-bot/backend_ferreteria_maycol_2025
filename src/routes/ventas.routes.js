@@ -7,3 +7,7 @@ import { obtenerVentas } from '../controllers/venta.controller.js';
 routes.get('/ventas', obtenerVentas);
 
 export default routes;
+
+
+// Ruta para obtener un venta por su ID
+routes.get('/venta/:id_venta', obtenerVentas);

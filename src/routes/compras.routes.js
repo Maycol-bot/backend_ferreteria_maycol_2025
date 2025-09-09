@@ -7,3 +7,6 @@ import { obtenerCompras } from '../controllers/compras.controller.js';
 routes.get('/compras', obtenerCompras);
 
 export default routes;
+
+// Ruta para obtener un compra por su ID
+routes.get('/compras/:id_compra', obtenerCompras);

@@ -7,3 +7,7 @@ import { obtenerEmpleados} from '../controllers/empleado.controller.js';
 routes.get('/empleados', obtenerEmpleados);
 
 export default routes;
+
+
+// Ruta para obtener un empleado por su ID
+routes.get('/empleado/:id_empleado', obtenerEmpleados);

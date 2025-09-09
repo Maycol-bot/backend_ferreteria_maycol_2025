@@ -8,3 +8,8 @@ import { obtenerCategorias } from '../controllers/categorias.controller.js';
 routes.get('/categorias', obtenerCategorias);
 
 export default routes;
+
+// Ruta para obtener un cliente por su ID
+routes.get('/categoria/:id_categoria', obtenerCategorias);
+
+routes.post('/categoria', obtenerCategorias);

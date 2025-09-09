@@ -7,3 +7,7 @@ import { obtenerClientes } from '../controllers/clientes.controller.js';
 routes.get('/clientes', obtenerClientes);
 
 export default routes;
+
+
+// Ruta para obtener un cliente por su ID
+routes.get('/cliente/:id_cliente', obtenerClientes);

@@ -13,3 +13,21 @@ export const obtenerCategorias = async (req, res) => {
         });
     }
 };
+
+// Obtener una categoría por su ID
+export const obtenerCategoria = async (req, res) => {
+    try {
+        const id_categoria = req.params.id;
+        const [result] = await pool.query('SELECT * FROM categorias WHERE id_categoria = ?', [id_categoria]);
+        if (result.length <= 0) {
+            return res.status(404).json({
+                mensaje: `Error al leer los datos. ID ${id_categoria} no encontrado.`
+            });
+        }
+        res.json(result[0]);
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Ha ocurrido un error al leer los datos de las categorias.'
+        });
+    }
+};
