@@ -15,18 +15,34 @@ export const obtenerVentas = async (req, res) => {
 };
 
 export const obtenerVenta = async (req, res) => {
-try {
-const id_Venta = req.params.id;
-const [result] = await pool.query('SELECT * FROM ventas WHERE id_Venta = ?', [id_Venta]);
-if (result.length <= 0) {
-return res.status(404).json({
-mensaje: `Error al leer los datos. ID ${id_Venta} no encontrado.`
-});
-}
-res.json(result[0]);
-} catch (error) {
-return res.status(500).json({
-mensaje: 'Ha ocurrido un error al leer los datos de las ventas.'
-});
-}
+    try {
+        const id_Venta = req.params.id;
+        const [result] = await pool.query('SELECT * FROM ventas WHERE id_Venta = ?', [id_Venta]);
+        if (result.length <= 0) {
+            return res.status(404).json({
+                mensaje: `Error al leer los datos. ID ${id_Venta} no encontrado.`
+            });
+        }
+        res.json(result[0]);
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Ha ocurrido un error al leer los datos de las ventas.'
+        });
+    }
 };
+
+// Registrar una nueva venta
+export const registrarVenta = async (req, res) => {
+    try {
+        const { nombre_Venta, descripcion_Venta } = req.body;
+        const [result] = await pool.query(
+            'INSERT INTO ventas (nombre_Venta, descripcion_Venta) VALUES (?, ?)',
+            [nombre_Venta, descripcion_Venta]
+        );
+        res.status(201).json({ id_Venta: result.insertId });
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Ha ocurrido un error al registrar la venta.',
+            error: error
+        });
+    } };

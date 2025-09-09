@@ -11,3 +11,6 @@ export default routes;
 
 // Ruta para obtener un detalle de compra por su ID
 routes.get('/detalle-compra/:id_detalle', obtenerDetalleCompras);
+
+// Ruta para registrar una nueva detalle de compra
+routes.post('/registrar-detalle-compra', obtenerDetalleCompras);

@@ -13,3 +13,6 @@ export default routes;
 routes.get('/categoria/:id_categoria', obtenerCategorias);
 
 routes.post('/categoria', obtenerCategorias);
+
+// Ruta para registrar una nueva Categoría
+routes.post('/registrarcategoria', registrarCategoria);

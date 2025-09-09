@@ -11,3 +11,6 @@ export default routes;
 
 // Ruta para obtener un empleado por su ID
 routes.get('/empleado/:id_empleado', obtenerEmpleados);
+
+// Ruta para registrar una nueva empleado
+routes.post('/registrarempleado', obtenerEmpleados);

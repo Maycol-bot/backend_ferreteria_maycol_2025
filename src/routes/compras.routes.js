@@ -10,3 +10,6 @@ export default routes;
 
 // Ruta para obtener un compra por su ID
 routes.get('/compras/:id_compra', obtenerCompras);
+
+// Ruta para registrar una nueva compra
+routes.post('/registrarcompra', obtenerCompras);

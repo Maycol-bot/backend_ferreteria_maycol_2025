@@ -11,3 +11,6 @@ export default routes;
 
 // Ruta para obtener un detalle de venta por su ID
 routes.get('/detalle-venta/:id_detalle', obtenerDetalleVentas);
+
+// Ruta para registrar una nueva detalle de venta
+routes.post('/registrar-detalle-venta', obtenerDetalleVentas);

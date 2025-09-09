@@ -30,3 +30,20 @@ export const obtenerCliente = async (req, res) => {
         });
     }
 };
+
+// Registrar una nueva cliente
+export const registrarCliente = async (req, res) => {
+    try {
+        const { nombre_cliente, descripcion_cliente } = req.body;
+        const [result] = await pool.query(
+            'INSERT INTO clientes (nombre_cliente, descripcion_cliente) VALUES (?, ?)',
+            [nombre_cliente, descripcion_cliente]
+        );
+        res.status(201).json({ id_cliente: result.insertId });
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Ha ocurrido un error al registrar la categoría.',
+            error: error
+        });
+    }
+};

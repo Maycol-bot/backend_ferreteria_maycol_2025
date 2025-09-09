@@ -11,3 +11,6 @@ export default routes;
 
 // Ruta para obtener un producto por su ID
 routes.get('/producto/:id_producto', obtenerProductos);
+
+// Ruta para registrar una nueva producto
+routes.post('/registrarproducto', obtenerProductos);
