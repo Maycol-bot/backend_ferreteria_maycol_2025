@@ -67,3 +67,25 @@ export const eliminarProducto = async (req, res) => {
         });
     }
 };
+
+// Actualizar producto por ID
+export const actualizarProducto = async (req, res) => {
+    try{
+        const id_producto = req.params.id_producto;
+        const {nombre_producto, descripcion_producto} = req.body;
+        const [result] = await pool.query (
+            'UPDATE productos SET nombre_producto = IFNULL(?, nombre_producto), descripcion_producto = IFNULL(?, descripcion_producto) WHERE id_producto = ?',
+            [nombre_producto, descripcion_producto, id_producto]
+        );
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: `Error al actualizar los datos. ID ${id_producto} no encontrado.`
+            });
+        }
+        res.json(result[0]);
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Ha ocurrido un error al leer los datos de las productos.'
+        });
+    } 
+};

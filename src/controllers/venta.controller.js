@@ -66,3 +66,25 @@ export const eliminarVenta = async (req, res) => {
         });
     }
 };
+
+// actualizar venta por id
+export const actualizarVenta = async (req, res) => {
+    try {
+        const id_venta = req.params.id_venta;
+        const { nombre_venta, descripcion_venta } = req.body;
+        const [result] = await pool.query(
+            'UPDATE ventas SET nombre_venta = ?, descripcion_venta = ? WHERE id_venta = ?',
+            [nombre_venta, descripcion_venta, id_venta]
+        );
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: `Error al actualizar los datos. ID ${id_venta} no encontrado.`
+            });
+        }
+        res.json(result[0]);
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Ha ocurrido un error al leer los datos de las ventas.'
+        });
+    }
+};

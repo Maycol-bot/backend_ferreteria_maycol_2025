@@ -2,7 +2,7 @@ import { Router } from 'express';
 const routes = Router();
 // Rutas
 
-import { obtenerProductos, eliminarProducto} from '../controllers/producto.controller.js';
+import { obtenerProductos, eliminarProducto, registrarProducto, actualizarProducto} from '../controllers/producto.controller.js';
 import { eliminarEmpleado } from '../controllers/empleado.controller.js';
 // Ruta para obtener todos las compras
 routes.get('/productos', obtenerProductos);
@@ -14,7 +14,10 @@ export default routes;
 routes.get('/producto/:id_producto', obtenerProductos);
 
 // Ruta para registrar una nueva producto
-routes.post('/registrarproducto', obtenerProductos);
+routes.post('/registrarproducto', registrarProducto);
 
 // Rutas para eliminar un empleado por su id
 routes.delete("/eliminarEmpleado/:id_producto", eliminarEmpleado);
+
+// ruta para actualizar un producto
+routes.put("/producto/:id_producto", actualizarProducto);

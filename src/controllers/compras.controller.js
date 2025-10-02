@@ -67,3 +67,25 @@ export const eliminarCompras = async (req, res) => {
         });
     }
 };
+
+// Actualizar compra por ID
+export const actualizarCompra = async (req, res) => {
+    try{
+        const id_compra = req.params.id_compra;
+        const {nombre_compra, descripcion_compra} = req.body;
+        const [result] = await pool.query (
+            'UPDATE compras SET nombre_compra = IFNULL(?, nombre_compra), descripcion_compra = IFNULL(?, descripcion_compra) WHERE id_compra = ?',
+            [nombre_compra, descripcion_compra, id_compra]
+        );
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: `Error al actualizar los datos. ID ${id_compra} no encontrado.`
+            });
+        }
+        res.json(result[0]);
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Ha ocurrido un error al leer los datos de las compras.'
+        });
+    }
+};

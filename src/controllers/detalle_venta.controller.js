@@ -67,3 +67,25 @@ export const eliminarDetalle_Venta = async (req, res) => {
         });
     }
 };
+
+// Actualizar detalle venta por ID
+export const actualizarDetalle_Venta = async (req, res) => {
+    try{
+        const id_detalle_venta = req.params.id_detalle_venta;
+        const {nombre_detalle_venta, descripcion_detalle_venta} = req.body;
+        const [result] = await pool.query (
+            'UPDATE detalle_ventas SET nombre_detalle_venta = IFNULL(?, nombre_detalle_venta), descripcion_detalle_venta = IFNULL(?, descripcion_detalle_venta) WHERE id_detalle_venta = ?',
+            [nombre_detalle_venta, descripcion_detalle_venta, id_detalle_venta]
+        );
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: `Error al actualizar los datos. ID ${id_detalle_venta} no encontrado.`
+            });
+        }
+        res.json(result[0]);
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Ha ocurrido un error al leer los datos de las ventas.'
+        });
+    }
+};

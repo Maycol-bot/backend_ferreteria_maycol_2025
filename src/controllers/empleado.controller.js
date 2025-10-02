@@ -67,3 +67,25 @@ export const eliminarEmpleado = async (req, res) => {
         });
     }
 };
+
+// Actualizar empleado por id
+export const actualizarEmpleado = async (req, res) => {
+    try {
+        const id_empleado = req.params.id_empleado;
+        const { nombre_empleado, apellido_empleado, direccion_empleado, telefono_empleado, email_empleado, puesto_empleado, salario_empleado } = req.body;
+        const [result] = await pool.query (
+            'UPDATE empleados SET nombre_empleado = IFNULL(?, nombre_empleado), apellido_empleado = IFNULL(?, apellido_empleado), direccion_empleado = IFNULL(?, direccion_empleado), telefono_empleado = IFNULL(?, telefono_empleado), email_empleado = IFNULL(?, email_empleado), puesto_empleado = IFNULL(?, puesto_empleado), salario_empleado = IFNULL(?, salario_empleado) WHERE id_empleado = ?',
+            [nombre_empleado, apellido_empleado, direccion_empleado, telefono_empleado, email_empleado, puesto_empleado, salario_empleado, id_empleado]
+        );
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: `Error al actualizar los datos. ID ${id_empleado} no encontrado.`
+            });
+        }
+        res.json(result[0]);
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'Ha ocurrido un error al leer los datos de los empleados.'
+        });
+    }
+};
