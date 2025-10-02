@@ -45,4 +45,25 @@ export const registrarEmpleado = async (req, res) => {
             mensaje: 'Ha ocurrido un error al registrar el empleado.',
             error: error
         });
-    }};
+    }
+};
+
+//eliminar detalle compra por id
+export const eliminarEmpleado = async (req, res) => {
+    try {
+        const id_empleado = req.params.id_empleado;
+        const [result] = await pool.query("DELITE FROM empleado WHERE id_empleado = ?", [id_empleado]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: `Error al eliminar los datos. ID ${id_empleado} no encontrado.`
+            });
+        }
+        //respuesta sin contenido para indicar exito
+        res.status(204).send();
+    }catch (error) {
+        return res.status(500).json ({
+            mensaje: `Error al eliminar la de empleado.`
+        });
+    }
+};

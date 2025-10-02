@@ -47,3 +47,23 @@ export const registrarCompra = async (req, res) => {
         });
     }
 };
+
+//eliminar compras por id
+export const eliminarCompras = async (req, res) => {
+    try {
+        const id_compras = req.params.id_categoria;
+        const [result] = await pool.query("DELITE FROM compras WHERE id_compras = ?", [id_compras]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: `Error al eliminar los datos. ID ${id_compras} no encontrado.`
+            });
+        }
+        //respuesta sin contenido para indicar exito
+        res.status(204).send();
+    }catch (error) {
+        return res.status(500).json ({
+            mensaje: `Error al eliminar la compra.`
+        });
+    }
+};

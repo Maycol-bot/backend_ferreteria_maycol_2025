@@ -45,4 +45,25 @@ export const registrarDetalle_Venta = async (req, res) => {
             mensaje: 'Ha ocurrido un error al registrar el detalle de venta.',
             error: error
         });
-    } };
+    } 
+};
+
+//eliminar detalle compra por id
+export const eliminarDetalle_Venta = async (req, res) => {
+    try {
+        const id_detalle_venta = req.params.id_detalle_venta;
+        const [result] = await pool.query("DELITE FROM detalle_venta WHERE id_detalle_venta = ?", [id_detalle_venta]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: `Error al eliminar los datos. ID ${id_detalle_venta} no encontrado.`
+            });
+        }
+        //respuesta sin contenido para indicar exito
+        res.status(204).send();
+    }catch (error) {
+        return res.status(500).json ({
+            mensaje: `Error al eliminar la de detalle venta.`
+        });
+    }
+};

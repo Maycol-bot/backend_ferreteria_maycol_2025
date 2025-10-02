@@ -46,3 +46,23 @@ export const registrarVenta = async (req, res) => {
             error: error
         });
     } };
+
+//eliminar detalle compra por id
+export const eliminarVenta = async (req, res) => {
+    try {
+        const id_venta = req.params.id_venta;
+        const [result] = await pool.query("DELITE FROM venta WHERE id_venta = ?", [id_venta]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: `Error al eliminar los datos. ID ${id_venta} no encontrado.`
+            });
+        }
+        //respuesta sin contenido para indicar exito
+        res.status(204).send();
+    }catch (error) {
+        return res.status(500).json ({
+            mensaje: `Error al eliminar la de venta.`
+        });
+    }
+};

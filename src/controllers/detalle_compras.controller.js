@@ -47,3 +47,23 @@ export const registrarDetalle_Compra = async (req, res) => {
         });
     }
 };
+
+//eliminar detalle compra por id
+export const eliminarDetalle_Compra = async (req, res) => {
+    try {
+        const id_detalle_compra = req.params.id_detalle_compra;
+        const [result] = await pool.query("DELITE FROM detalle_compra WHERE id_detalle_compra = ?", [id_detalle_compra]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: `Error al eliminar los datos. ID ${id_detalle_compra} no encontrado.`
+            });
+        }
+        //respuesta sin contenido para indicar exito
+        res.status(204).send();
+    }catch (error) {
+        return res.status(500).json ({
+            mensaje: `Error al eliminar la de detalle compra.`
+        });
+    }
+};

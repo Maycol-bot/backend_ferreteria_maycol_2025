@@ -2,7 +2,7 @@ import { Router } from 'express';
 const routes = Router();
 // Rutas
 
-import { obtenerEmpleados} from '../controllers/empleado.controller.js';
+import { obtenerEmpleados, eliminarEmpleado} from '../controllers/empleado.controller.js';
 // Ruta para obtener todos los empleados
 routes.get('/empleados', obtenerEmpleados);
 
@@ -14,3 +14,6 @@ routes.get('/empleado/:id_empleado', obtenerEmpleados);
 
 // Ruta para registrar una nueva empleado
 routes.post('/registrarempleado', obtenerEmpleados);
+
+// Rutas para eliminar un empleado por su id
+routes.delete("/eliminarEmpleado/:id_compra", eliminarEmpleado);

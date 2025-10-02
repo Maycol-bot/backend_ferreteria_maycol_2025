@@ -47,3 +47,23 @@ export const registrarUsuario = async (req, res) => {
             error: error
         });
     } };
+
+    //eliminar detalle compra por id
+export const eliminarUsuario = async (req, res) => {
+    try {
+        const id_usuario = req.params.id_usuario;
+        const [result] = await pool.query("DELITE FROM usuario WHERE id_usuario = ?", [id_usuario]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: `Error al eliminar los datos. ID ${id_usuario} no encontrado.`
+            });
+        }
+        //respuesta sin contenido para indicar exito
+        res.status(204).send();
+    }catch (error) {
+        return res.status(500).json ({
+            mensaje: `Error al eliminar la de usuario.`
+        });
+    }
+};

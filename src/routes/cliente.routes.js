@@ -2,7 +2,7 @@ import { Router } from 'express';
 const routes = Router();
 // Rutas
 
-import { obtenerClientes } from '../controllers/clientes.controller.js';
+import { obtenerClientes, eliminarCliente} from '../controllers/clientes.controller.js';
 // Ruta para obtener todos los clientes
 routes.get('/clientes', obtenerClientes);
 
@@ -14,3 +14,6 @@ routes.get('/cliente/:id_cliente', obtenerClientes);
 
 // Ruta para registrar una nueva Categoría
 routes.post('/registrarcliente', obtenerClientes);
+
+// Rutas para eliminar un cliente por su id
+routes.delete("/eliminarCliente/:id_cliente", eliminarCliente);
