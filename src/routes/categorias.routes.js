@@ -7,8 +7,6 @@ import {obtenerCategorias, registrarCategoria, eliminarCategoria, actualizarCate
 // Ruta para obtener todos los clientes
 routes.get('/categorias', obtenerCategorias);
 
-export default routes;
-
 // Ruta para obtener un cliente por su ID
 routes.get('/categoria/:id_categoria', obtenerCategorias);
 
@@ -22,3 +20,5 @@ routes.delete("/categoria/:id_categoria", eliminarCategoria);
 
 // ruta para actaulizar una categoria
 routes.put("/categoria/:id_categoria", actualizarCategoria);
+
+export default routes;
