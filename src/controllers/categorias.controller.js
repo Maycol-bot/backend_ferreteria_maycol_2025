@@ -15,7 +15,7 @@ export const obtenerCategorias = async (req, res) => {
 };
 
 // Obtener una categoría por su ID
-export const obtenerCategoria = async (req, res) => {
+export const obtenerCategoriasporID = async (req, res) => {
     try {
         const id_categoria = req.params.id;
         const [result] = await pool.query('SELECT * FROM categorias WHERE id_categoria = ?', [id_categoria]);

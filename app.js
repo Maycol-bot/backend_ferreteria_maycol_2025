@@ -23,14 +23,14 @@ app.use(express.json({limit: '10mb'}));
 app.use(express.urlencoded({limit: '10mb', extended: true}));
 
 app.use('/api', rutasCategorias);
-app.get('/api', rutasClientes);
-app.get('/api', rutasCompras);
-app.get('/api', rutasDetalleCompra);
-app.get('/api', rutasDetalleVenta);
-app.get('/api', rutasEmpleado);
-app.get('/api', rutasProductos);
-app.get('/api', rutasUsuarios);
-app.get('/api', rutasVentas);
+app.use('/api', rutasClientes);
+app.use('/api', rutasCompras);
+app.use('/api', rutasDetalleCompra);
+app.use('/api', rutasDetalleVenta);
+app.use('/api', rutasEmpleado);
+app.use('/api', rutasProductos);
+app.use('/api', rutasUsuarios);
+app.use('/api', rutasVentas);
 
 app.use((req, res, next) => {
     res.status(404).json({

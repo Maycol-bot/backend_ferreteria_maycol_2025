@@ -4,7 +4,7 @@ import { pool } from '../../db_connection.js';
 // Obtener todos los clientes
 export const obtenerClientes = async (req, res) => {
     try {
-        const [result] = await pool.query('SELECT * FROM Clientes');
+        const [result] = await pool.query("SELECT * FROM Clientes");
             res.json(result);
     } catch (error) {
     return res.status(500).json({
@@ -42,7 +42,7 @@ export const registrarCliente = async (req, res) => {
         res.status(201).json({ id_cliente: result.insertId });
     } catch (error) {
         return res.status(500).json({
-            mensaje: 'Ha ocurrido un error al registrar la categoría.',
+            mensaje: 'Ha ocurrido un error al registrar la cliente.',
             error: error
         });
     }
@@ -51,8 +51,8 @@ export const registrarCliente = async (req, res) => {
 //eliminar cliente por id
 export const eliminarCliente = async (req, res) => {
     try {
-        const id_cliente = req.params.id_categoria;
-        const [result] = await pool.query("DELITE FROM cliente WHERE id_cliente = ?", [id_cliente]);
+        const id_cliente = req.params.id_cliente;
+        const [result] = await pool.query("DELETE FROM cliente WHERE id_cliente = ?", [id_cliente]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({

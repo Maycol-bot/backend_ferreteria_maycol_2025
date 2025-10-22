@@ -3,14 +3,12 @@ import { Router } from 'express';
 const routes = Router();
 // Rutas
 
-import {obtenerCategorias, registrarCategoria, eliminarCategoria, actualizarCategoria } from '../controllers/categorias.controller.js';
+import {obtenerCategorias, registrarCategoria, eliminarCategoria, actualizarCategoria, obtenerCategoriasporID } from '../controllers/categorias.controller.js';
 // Ruta para obtener todos los clientes
 routes.get('/categorias', obtenerCategorias);
 
 // Ruta para obtener un cliente por su ID
-routes.get('/categoria/:id_categoria', obtenerCategorias);
-
-routes.post('/categoria', obtenerCategorias);
+routes.get('/categoria/:id_categoria', obtenerCategoriasporID);
 
 // Ruta para registrar una nueva Categoría
 routes.post('/registrarcategoria', registrarCategoria);
