@@ -6,8 +6,6 @@ import { obtenerUsuarios, eliminarUsuario, registrarUsuario, actualizarUsuarios}
 // Ruta para obtener todos los usuarios
 routes.get('/usuarios', obtenerUsuarios);
 
-export default routes;
-
 
 // Ruta para obtener un cliente por su ID
 routes.get('/usuario/:id_usuario', obtenerUsuarios);
@@ -20,3 +18,5 @@ routes.delete("/eliminarUsuario/:id_usuario", eliminarUsuario);
 
 // ruta para actualizar un usuario
 routes.put("/usuario/:id_usuario", actualizarUsuarios);
+
+export default routes;

@@ -35,10 +35,10 @@ export const obtenerUsuario = async (req, res) => {
 // Registrar una nueva usuario
 export const registrarUsuario = async (req, res) => {
     try {
-        const { nombre_usuario, descripcion_usuario } = req.body;
+        const { usuario, contrasena } = req.body;
         const [result] = await pool.query(
-            'INSERT INTO usuarios (nombre_usuario, descripcion_usuario) VALUES (?, ?)',
-            [nombre_usuario, descripcion_usuario]
+            'INSERT INTO usuarios (usuario, contrasena) VALUES (?, ?)',
+            [usuario, contrasena]
         );
         res.status(201).json({ id_usuario: result.insertId });
     } catch (error) {
@@ -72,10 +72,10 @@ export const eliminarUsuario = async (req, res) => {
 export const actualizarUsuarios = async (req, res) => {
     try {
         const id_usuario = req.params.id_usuario;
-        const { nombre_usuario, descripcion_usuario } = req.body;
+        const { usuario, contrasena } = req.body;
         const [result] = await pool.query(
-            'UPDATE usuarios SET nombre_usuario = IFNULL(?, nombre_usuario), descripcion_usuario = IFNULL(?, descripcion_usuario) WHERE id_usuario = ?',
-            [nombre_usuario, descripcion_usuario, id_usuario]
+            'UPDATE usuarios SET usuario = IFNULL(?, usuario), contrasena = IFNULL(?, contrasena) WHERE id_usuario = ?',
+            [usuario, contrasena, id_usuario]
         );
         if (result.affectedRows === 0) {
             return res.status(404).json({

@@ -32,7 +32,7 @@ CREATE TABLE Empleados (
 CREATE TABLE Usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     usuario VARCHAR(20),
-    contraseña VARCHAR(20)
+    contrasena VARCHAR(20)
 );
 
 -- Tabla Categorias: almacena las categorías de los productos
@@ -170,7 +170,7 @@ INSERT INTO Empleados (primer_nombre, segundo_nombre, primer_apellido, segundo_a
 ('Pedro', 'José', 'Sánchez', 'García', '85553333', 'Gerente', '2023-11-10');
 
 -- Inserciones en Usuarios (independiente en este diseño)
-INSERT INTO Usuarios (usuario, contraseña) VALUES
+INSERT INTO Usuarios (usuario, contrasena) VALUES
 ('eli', 'eli2025'),
 ('javier51', '123456'),
 ('cruz51', '20252025');
