@@ -16,7 +16,7 @@ export const obtenerClientes = async (req, res) => {
 
 export const obtenerCliente = async (req, res) => {
     try {
-        const id_cliente = req.params.id;
+        const id_cliente = req.params.id_cliente;
         const [result] = await pool.query('SELECT * FROM clientes WHERE id_cliente = ?', [id_cliente]);
         if (result.length <= 0) {
             return res.status(404).json({
@@ -34,10 +34,10 @@ export const obtenerCliente = async (req, res) => {
 // Registrar una nueva cliente
 export const registrarCliente = async (req, res) => {
     try {
-        const { nombre_cliente, descripcion_cliente } = req.body;
+        const { primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, celular, direccion, cedula } = req.body;
         const [result] = await pool.query(
-            'INSERT INTO clientes (nombre_cliente, descripcion_cliente) VALUES (?, ?)',
-            [nombre_cliente, descripcion_cliente]
+            'INSERT INTO clientes (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, celular, direccion, cedula) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, celular, direccion, cedula]
         );
         res.status(201).json({ id_cliente: result.insertId });
     } catch (error) {
@@ -72,10 +72,10 @@ export const eliminarCliente = async (req, res) => {
 export const actualizarCliente = async (req, res) => {
     try{
         const id_cliente = req.params.id_cliente;
-        const {nombre_cliente, descripcion_cliente} = req.body; 
+        const { primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, celular, direccion, cedula} = req.body; 
         const [result] = await pool.query (
-            'UPDATE cliente SET nombre_cliente = IFNULL(?, nombre_cliente), descripcion_cliente = IFNULL(?, descripcion_cliente) WHERE id_cliente = ?',
-            [nombre_cliente, descripcion_cliente, id_cliente]
+            'UPDATE clientes SET primer_nombre = IFNULL(?, primer_nombre), segundo_nombre = IFNULL(?, segundo_nombre), primer_apellido = IFNULL(?, primer_apellido), segundo_apellido = IFNULL(?, segundo_apellido), celular = IFNULL(?, celular), direccion = IFNULL(?, direccion), cedula = IFNULL(?, cedula) WHERE id_cliente = ?',
+            [primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, celular, direccion, cedula, id_cliente]
         );
         if (result.affectedRows === 0) {
             return res.status(404).json({
