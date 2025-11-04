@@ -53,7 +53,7 @@ export const registrarCategoria = async (req, res) => {
 export const eliminarCategoria = async (req, res) => {
     try {
         const id_categoria = req.params.id_categoria;
-        const [result] = await pool.query("DELITE FROM categoria WHERE id_categoria = ?", [id_categoria]);
+        const [result] = await pool.query("DELETE FROM categorias WHERE id_categoria = ?", [id_categoria]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({

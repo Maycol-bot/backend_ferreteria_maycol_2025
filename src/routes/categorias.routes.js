@@ -14,9 +14,9 @@ routes.get('/categoria/:id_categoria', obtenerCategoriasporID);
 routes.post('/registrarcategoria', registrarCategoria);
 
 //ruta para eliminar una categoria
-routes.delete("/categoria/:id_categoria", eliminarCategoria); 
+routes.delete("/eliminarcategoria/:id_categoria", eliminarCategoria);
 
 // ruta para actaulizar una categoria
-routes.put("/categoria/:id_categoria", actualizarCategoria);
+routes.put("/actualizarcategoria/:id_categoria", actualizarCategoria);
 
 export default routes;
