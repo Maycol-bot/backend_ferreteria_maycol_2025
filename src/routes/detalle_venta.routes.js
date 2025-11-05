@@ -1,20 +1,25 @@
 import { Router } from 'express';
-import { obtenerDetalles_compras, obtenerDetalle_compra, registrarDetalle_compra, eliminarDetalle_compra,actualizarDetalle_compra} from '../controllers/detalles_compras.controllers.js';
+import { obtenerDetalles_ventas,
+    obtenerDetalle_venta,
+     registrarDetalle_venta,
+      eliminarDetalle_venta,
+      actualizarDetalle_venta
+} from '../controllers/detalle_venta.controller.js';
 
 const router = Router();
 
 // Ruta para obtener todas los detalles_ventas
-router.get('/detalles_compras', obtenerDetalles_compras);
+router.get('/detalles_ventas', obtenerDetalles_ventas);
 
 // ruta para obtener una detalles_ventas por su ID
-router.get('/detalle_compra/:id', obtenerDetalle_compra);
+router.get('/detalle_venta/:id', obtenerDetalle_venta);
 
 // Ruta para registrar una nueva detalle_ventas
-router.post('/detalle_compra', registrarDetalle_compra);
+router.post('/detalle_venta', registrarDetalle_venta);
 
 // ruta para eliminar una detalles_ventas por ID
-router.delete('/detalle_compra/:id_detalle_compra', eliminarDetalle_compra);
+router.delete('/detalle_venta/:id_detalle_venta', eliminarDetalle_venta);
 
 // Ruta para actualizar una detalles_ventas por su ID
-router.patch('/detalle_compra/:id_detalle_compra', actualizarDetalle_compra);
+router.patch('/detalle_venta/:id_detalle_venta', actualizarDetalle_venta);
 export default router;

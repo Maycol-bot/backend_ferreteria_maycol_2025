@@ -69,7 +69,7 @@ export const eliminarUsuario = async (req, res) => {
 };
 
 // actualizar todos los usuarios
-export const actualizarUsuarios = async (req, res) => {
+export const actualizarUsuario = async (req, res) => {
     try {
         const id_usuario = req.params.id_usuario;
         const { usuario, contrasena } = req.body;

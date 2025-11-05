@@ -83,6 +83,7 @@ export const actualizarCliente = async (req, res) => {
                 mensaje: `Error al actualizar los datos. ID ${id_cliente} no encontrado.`
             });
         }
+        res.json({ mensaje: `Cliente con ID ${id_cliente} actualizado.` });
     }catch (error) {
         return res.status(500).json ({
             mensaje: `Error al actualizar la cliente.`

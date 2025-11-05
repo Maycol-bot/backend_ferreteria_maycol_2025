@@ -1,4 +1,5 @@
-import { pool } from '../../db_conecction.js';
+import { pool } from '../../db_connection.js';
+
 // Obtener todas las compras
 export const obtenerCompras = async (req, res) => {
     try {
@@ -14,7 +15,7 @@ export const obtenerCompras = async (req, res) => {
 
 
 // Obtener una compras por su ID
-export const obtenerCompra = async (req, res) => {
+export const obtenerCompraPorId = async (req, res) => {
     try {
         const id_compra = req.params.id_compra;
         const [result] = await pool.query('SELECT * FROM compras WHERE id_compra = ?', [id_compra]);

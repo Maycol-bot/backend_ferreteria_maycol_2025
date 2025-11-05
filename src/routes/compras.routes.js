@@ -1,20 +1,27 @@
 import { Router } from 'express';
-import { obtenerCompras, obtenerCompra, registrarCompra,actualizarCompra, eliminarCompra, } from '../controllers/compras.controllers.js';
+import { 
+  obtenerCompras, 
+  obtenerCompra, 
+  registrarCompra, 
+  actualizarCompra, 
+  eliminarCompra 
+} from '../controllers/compras.controller.js';
 
 const router = Router();
 
-// Ruta para obtener todas las  compras
-router.get('/ compras', obtenerCompras);
+// Obtener todas las compras
+router.get('/compras', obtenerCompras);
 
-// ruta para obtener una compras por su ID
-router.get('/compra/:id', obtenerCompra);
+// Obtener una compra por su ID
+router.get('/compra/:id_compra', obtenerCompra);
 
-router.get('/compra', registrarCompra);
+// Registrar una nueva compra
+router.post('/compra', registrarCompra);
 
-// Ruta para registrar una nueva compras
-router.post('/compra', actualizarCompra);
+// Actualizar una compra existente
+router.put('/compra/:id_compra', actualizarCompra);
 
-// ruta para eliminar una compras por ID
+// Eliminar una compra por su ID
 router.delete('/compra/:id_compra', eliminarCompra);
 
 export default router;

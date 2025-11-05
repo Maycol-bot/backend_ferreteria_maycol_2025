@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { obtenerUsuarios, obtenerUsuario, registrarUsuario, eliminarUsuario,actualizarUsuario} from '../controllers/usuarios.controllers.js';
+import { obtenerUsuarios,
+     obtenerUsuario, 
+     registrarUsuario, 
+     eliminarUsuario,
+     actualizarUsuario} 
+     from '../controllers/usuario.controller.js';
 
 const router = Router();
 
@@ -17,8 +22,5 @@ router.delete('/usuario/:id_usuario', eliminarUsuario);
 
 // Ruta para actualizar un usuario por su ID
 router.put('/usuario/:id_usuario', actualizarUsuario);
-
-// Ruta para actualizar un usuario por su ID
-router.patch('/usuario/:id_usuario', actualizarUsuario);
 
 export default router;
