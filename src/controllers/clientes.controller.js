@@ -14,7 +14,8 @@ export const obtenerClientes = async (req, res) => {
     }
 };
 
-export const obtenerCliente = async (req, res) => {
+// Obtener un cliente por ID
+export const obtenerClientePorId = async (req, res) => {
     try {
         const id_cliente = req.params.id_cliente;
         const [result] = await pool.query('SELECT * FROM clientes WHERE id_cliente = ?', [id_cliente]);
@@ -52,7 +53,7 @@ export const registrarCliente = async (req, res) => {
 export const eliminarCliente = async (req, res) => {
     try {
         const id_cliente = req.params.id_cliente;
-        const [result] = await pool.query("DELETE FROM cliente WHERE id_cliente = ?", [id_cliente]);
+        const [result] = await pool.query("DELETE FROM Clientes WHERE id_cliente = ?", [id_cliente]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({

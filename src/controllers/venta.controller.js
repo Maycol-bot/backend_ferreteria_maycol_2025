@@ -1,90 +1,98 @@
-
-import { pool } from '../../db_connection.js';
+import { pool } from '../../db_conecction.js';
 
 // Obtener todas las ventas
 export const obtenerVentas = async (req, res) => {
     try {
         const [result] = await pool.query('SELECT * FROM ventas');
-            res.json(result);
+        res.json(result);
     } catch (error) {
-    return res.status(500).json({
-    mensaje: 'Ha ocurrido un error al leer los datos.',
-    error: error
+        return res.status(500).json({
+            mensaje: 'Ha ocurrido un error al leer los datos.',
+            error: error
         });
     }
 };
 
+// Obtener una venta por su ID
 export const obtenerVenta = async (req, res) => {
-    try {
-        const id_Venta = req.params.id;
-        const [result] = await pool.query('SELECT * FROM ventas WHERE id_Venta = ?', [id_Venta]);
-        if (result.length <= 0) {
-            return res.status(404).json({
-                mensaje: `Error al leer los datos. ID ${id_Venta} no encontrado.`
-            });
-        }
-        res.json(result[0]);
-    } catch (error) {
-        return res.status(500).json({
-            mensaje: 'Ha ocurrido un error al leer los datos de las ventas.'
-        });
-    }
+try {
+    const id_venta = req.params.id_producto;
+const [result] = await pool.query('SELECT * FROM ventas WHERE id_venta = ?', [id_venta]);
+if (result.length <= 0) {
+return res.status(404).json({
+mensaje: `Error al leer los datos. ID ${id_venta} no encontrado.`
+});
+}
+res.json(result[0]);
+} catch (error) {
+return res.status(500).json({
+mensaje: 'Ha ocurrido un error al leer los datos de las productos.'
+});
+}
 };
 
 // Registrar una nueva venta
 export const registrarVenta = async (req, res) => {
-    try {
-        const { nombre_Venta, descripcion_Venta } = req.body;
-        const [result] = await pool.query(
-            'INSERT INTO ventas (nombre_Venta, descripcion_Venta) VALUES (?, ?)',
-            [nombre_Venta, descripcion_Venta]
-        );
-        res.status(201).json({ id_Venta: result.insertId });
-    } catch (error) {
-        return res.status(500).json({
-            mensaje: 'Ha ocurrido un error al registrar la venta.',
-            error: error
-        });
-    } };
-
-//eliminar detalle compra por id
-export const eliminarVenta = async (req, res) => {
-    try {
-        const id_venta = req.params.id_venta;
-        const [result] = await pool.query("DELITE FROM venta WHERE id_venta = ?", [id_venta]);
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({
-                mensaje: `Error al eliminar los datos. ID ${id_venta} no encontrado.`
-            });
-        }
-        //respuesta sin contenido para indicar exito
-        res.status(204).send();
-    }catch (error) {
-        return res.status(500).json ({
-            mensaje: `Error al eliminar la de venta.`
-        });
-    }
+try {
+const { id_cliente ,id_empleado ,fecha_venta ,total_venta } = req.body;
+const [result] = await pool.query(
+'INSERT INTO usuarios (id_cliente ,id_empleado ,fecha_venta ,total_venta) VALUES (?,?,?,?)',
+[id_cliente ,id_empleado ,fecha_venta ,total_venta]
+);
+res.status(201).json({ id_venta: result.insertId });
+} catch (error) {
+return res.status(500).json({
+mensaje: 'Ha ocurrido un error al registrar las ventas.',
+error: error
+});
+}
 };
 
-// actualizar venta por id
+// Eliminar ventas por id 
+export const eliminarVenta = async (req, res)=> {
+    try{
+        const id_producto = req.params.id_producto;
+        const [result] = await pool.query('DELETE FROM ventas WHERE id_venta = ?',[id_venta]);
+
+        if (result.affectedRows === 0 ){
+            return res.status(404).json({
+            mensaje: `Error al eliminar la venta. el ID ${id_venta} no fue encontrado.`
+        });
+    }
+
+    //respuesta sin contenido para indicar exito
+res.status(204).send();
+}catch (error){
+    return res.status(500).json({
+        mensaje: 'Ha ocurrido un error al eliminar las ventas.',
+        error: error
+    });
+}
+};
+
+
+// controlador para actualizar parcialmente una venta por su ID
 export const actualizarVenta = async (req, res) => {
     try {
-        const id_venta = req.params.id_venta;
-        const { nombre_venta, descripcion_venta } = req.body;
+        const {id_venta} = req.params;
+        const datos = req.body;
+
         const [result] = await pool.query(
-            'UPDATE ventas SET nombre_venta = ?, descripcion_venta = ? WHERE id_venta = ?',
-            [nombre_venta, descripcion_venta, id_venta]
+            'UPDATE ventas SET ? WHERE id_venta = ?',
+            [datos, id_venta]
         );
-        if (result.affectedRows === 0) {
+        if (result.affectedRows === 0){
             return res.status(404).json({
-                mensaje: `Error al actualizar los datos. ID ${id_venta} no encontrado.`
+                mensaje: `ventas con ID ${id_venta} no encotntrada.`
             });
         }
-        res.json(result[0]);
+        res.status(200).json({
+            mensaje: `ventas con ID ${id_venta} actualizada exitosamente.`
+        });
     } catch (error) {
         return res.status(500).json({
-            mensaje: 'Ha ocurrido un error al leer los datos de las ventas.'
+            mensaje: 'Ha ocurrido un error al actualizar las ventas.',
+            error: error
         });
     }
 };

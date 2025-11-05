@@ -1,22 +1,24 @@
 import { Router } from 'express';
-const routes = Router();
-// Rutas
+import { obtenerUsuarios, obtenerUsuario, registrarUsuario, eliminarUsuario,actualizarUsuario} from '../controllers/usuarios.controllers.js';
 
-import { obtenerUsuarios, eliminarUsuario, registrarUsuario, actualizarUsuarios} from '../controllers/usuario.controller.js';
-// Ruta para obtener todos los usuarios
-routes.get('/usuarios', obtenerUsuarios);
+const router = Router();
 
+// Ruta para obtener todas los usuarios
+router.get('/usuarios', obtenerUsuarios);
 
-// Ruta para obtener un cliente por su ID
-routes.get('/usuario/:id_usuario', obtenerUsuarios);
+// ruta para obtener un usuario por su ID
+router.get('/usuario/:id', obtenerUsuario);
 
-// Ruta para registrar una nueva usuario
-routes.post('/registrarusuario', registrarUsuario);
+// Ruta para registrar un nuevo usuario
+router.post('/usuario', registrarUsuario);
 
-// Rutas para eliminar una compra por su id
-routes.delete("/eliminarUsuario/:id_usuario", eliminarUsuario);
+// ruta para eliminar un usuario por ID
+router.delete('/usuario/:id_usuario', eliminarUsuario);
 
-// ruta para actualizar un usuario
-routes.put("/usuario/:id_usuario", actualizarUsuarios);
+// Ruta para actualizar un usuario por su ID
+router.put('/usuario/:id_usuario', actualizarUsuario);
 
-export default routes;
+// Ruta para actualizar un usuario por su ID
+router.patch('/usuario/:id_usuario', actualizarUsuario);
+
+export default router;
