@@ -1,38 +1,15 @@
-
+// controllers/usuario.controller.js
 import { pool } from '../../db_connection.js';
 
-// Obtener todos los usuarios
 export const obtenerUsuarios = async (req, res) => {
     try {
         const [result] = await pool.query('SELECT * FROM usuarios');
-            res.json(result);
+        res.json(result);
     } catch (error) {
-    return res.status(500).json({
-    mensaje: 'Ha ocurrido un error al leer los datos.',
-    error: error
-        });
+        return res.status(500).json({ mensaje: 'Error al obtener usuarios', error: error.message });
     }
 };
 
-
-export const obtenerUsuario = async (req, res) => {
-    try {
-        const id_usuario = req.params.id;
-        const [result] = await pool.query('SELECT * FROM usuarios WHERE id_usuario = ?', [id_usuario]);
-        if (result.length <= 0) {
-            return res.status(404).json({
-                mensaje: `Error al leer los datos. ID ${id_usuario} no encontrado.`
-            });
-        }
-        res.json(result[0]);
-    } catch (error) {
-        return res.status(500).json({
-            mensaje: 'Ha ocurrido un error al leer los datos de los usuarios.'
-        });
-    }
-};
-
-// Registrar una nueva usuario
 export const registrarUsuario = async (req, res) => {
     try {
         const { usuario, contrasena } = req.body;
@@ -42,50 +19,36 @@ export const registrarUsuario = async (req, res) => {
         );
         res.status(201).json({ id_usuario: result.insertId });
     } catch (error) {
-        return res.status(500).json({
-            mensaje: 'Ha ocurrido un error al registrar el usuario.',
-            error: error
-        });
-    } };
-
-    //eliminar detalle compra por id
-export const eliminarUsuario = async (req, res) => {
-    try {
-        const id_usuario = req.params.id_usuario;
-        const [result] = await pool.query("DELITE FROM usuario WHERE id_usuario = ?", [id_usuario]);
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({
-                mensaje: `Error al eliminar los datos. ID ${id_usuario} no encontrado.`
-            });
-        }
-        //respuesta sin contenido para indicar exito
-        res.status(204).send();
-    }catch (error) {
-        return res.status(500).json ({
-            mensaje: `Error al eliminar la de usuario.`
-        });
+        return res.status(500).json({ mensaje: 'Error al registrar usuario', error: error.message });
     }
 };
 
-// actualizar todos los usuarios
 export const actualizarUsuario = async (req, res) => {
     try {
-        const id_usuario = req.params.id_usuario;
+        const { id_usuario } = req.params;
         const { usuario, contrasena } = req.body;
         const [result] = await pool.query(
-            'UPDATE usuarios SET usuario = IFNULL(?, usuario), contrasena = IFNULL(?, contrasena) WHERE id_usuario = ?',
+            'UPDATE usuarios SET usuario = ?, contrasena = ? WHERE id_usuario = ?',
             [usuario, contrasena, id_usuario]
         );
         if (result.affectedRows === 0) {
-            return res.status(404).json({
-                mensaje: `Error al actualizar los datos. ID ${id_usuario} no encontrado.`
-            });
+            return res.status(404).json({ mensaje: 'Usuario no encontrado' });
         }
-        res.json(result[0]);
+        res.json({ mensaje: 'Usuario actualizado' });
     } catch (error) {
-        return res.status(500).json({
-            mensaje: 'Ha ocurrido un error al leer los datos de las usuarios.'
-        });
+        return res.status(500).json({ mensaje: 'Error al actualizar', error: error.message });
+    }
+};
+
+export const eliminarUsuario = async (req, res) => {
+    try {
+        const { id_usuario } = req.params;
+        const [result] = await pool.query('DELETE FROM usuarios WHERE id_usuario = ?', [id_usuario]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+        }
+        res.status(204).send();
+    } catch (error) {
+        return res.status(500).json({ mensaje: 'Error al eliminar', error: error.message });
     }
 };

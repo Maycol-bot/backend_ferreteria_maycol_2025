@@ -1,26 +1,17 @@
+// routes/venta.routes.js
 import { Router } from 'express';
-import { obtenerVentas,
-     obtenerVenta,
-      registrarVenta,
-       eliminarVenta,
-       actualizarVenta}
-        from '../controllers/venta.controller.js';
+import { 
+    obtenerVentas, 
+    registrarVenta, 
+    actualizarVenta, 
+    eliminarVenta 
+} from '../controllers/venta.controller.js';
 
 const router = Router();
 
-// Ruta para obtener todas los detalles_ventas
 router.get('/ventas', obtenerVentas);
-
-// ruta para obtener una detalles_ventas por su ID
-router.get('/venta/:id', obtenerVenta);
-
-// Ruta para registrar una nueva detalle_ventas
-router.post('/venta', registrarVenta);
-
-// ruta para eliminar una detalles_ventas por ID
-router.delete('/venta/:id_venta', eliminarVenta);
-
-// Ruta para actualizar una detalles_ventas por su ID
-router.patch('/venta/:id_venta', actualizarVenta);
+router.post('/ventas', registrarVenta);
+router.put('/ventas/:id_venta', actualizarVenta);     // ← PUT + /ventas (plural)
+router.delete('/ventas/:id_venta', eliminarVenta);    // ← mismo patrón
 
 export default router;
