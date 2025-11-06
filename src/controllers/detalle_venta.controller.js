@@ -1,4 +1,4 @@
-import { pool } from '../../db_conecction.js';
+import { pool } from '../../db_connection.js';
 // Obtener todas las Detalles_ventas
 export const obtenerDetalles_ventas = async (req, res) => {
     try {

@@ -1,91 +1,121 @@
-
+// controllers/empleado.controller.js
 import { pool } from '../../db_connection.js';
 
-// Obtener todos los empleados
+// GET todos
 export const obtenerEmpleados = async (req, res) => {
     try {
-        const [result] = await pool.query('SELECT * FROM empleados');
-            res.json(result);
+        const [rows] = await pool.query('SELECT * FROM Empleados ORDER BY id_empleado DESC');
+        res.json(rows);
     } catch (error) {
-    return res.status(500).json({
-    mensaje: 'Ha ocurrido un error al leer los datos.',
-    error: error
-        });
+        console.error(error);
+        res.status(500).json({ mensaje: 'Error al obtener empleados', error: error.message });
     }
 };
 
+// GET uno
 export const obtenerEmpleado = async (req, res) => {
     try {
-        const id_empleado = req.params.id;
-        const [result] = await pool.query('SELECT * FROM empleados WHERE id_empleado = ?', [id_empleado]);
-        if (result.length <= 0) {
-            return res.status(404).json({
-                mensaje: `Error al leer los datos. ID ${id_empleado} no encontrado.`
-            });
-        }
-        res.json(result[0]);
+        const { id } = req.params;
+        const [rows] = await pool.query('SELECT * FROM Empleados WHERE id_empleado = ?', [id]);
+        if (rows.length === 0) return res.status(404).json({ mensaje: 'Empleado no encontrado' });
+        res.json(rows[0]);
     } catch (error) {
-        return res.status(500).json({
-            mensaje: 'Ha ocurrido un error al leer los datos de los empleados.'
-        });
+        res.status(500).json({ mensaje: 'Error' });
     }
 };
 
-// Registrar una nueva detalle empleado
+// POST crear
 export const registrarEmpleado = async (req, res) => {
     try {
-        const { nombre_empleado, apellido_empleado, direccion_empleado, telefono_empleado, email_empleado, puesto_empleado, salario_empleado } = req.body;
+        const {
+            primer_nombre,
+            segundo_nombre = null,
+            primer_apellido,
+            segundo_apellido = null,
+            celular,
+            cargo,
+            fecha_contratacion
+        } = req.body;
+
         const [result] = await pool.query(
-            'INSERT INTO empleados (nombre_empleado, apellido_empleado, direccion_empleado, telefono_empleado, email_empleado, puesto_empleado, salario_empleado) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [nombre_empleado, apellido_empleado, direccion_empleado, telefono_empleado, email_empleado, puesto_empleado, salario_empleado]
+            `INSERT INTO Empleados 
+            (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, celular, cargo, fecha_contratacion)
+            VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            [primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, celular, cargo, fecha_contratacion]
         );
-        res.status(201).json({ id_empleado: result.insertId });
+
+        res.status(201).json({ 
+            id_empleado: result.insertId,
+            mensaje: 'Empleado creado correctamente'
+        });
     } catch (error) {
-        return res.status(500).json({
-            mensaje: 'Ha ocurrido un error al registrar el empleado.',
-            error: error
+        console.error('ERROR REGISTRO:', error);
+        res.status(500).json({ 
+            mensaje: 'Error al crear empleado', 
+            error: error.message,
+            codigo: error.code 
         });
     }
 };
 
-//eliminar detalle compra por id
+// DELETE
 export const eliminarEmpleado = async (req, res) => {
     try {
-        const id_empleado = req.params.id_empleado;
-        const [result] = await pool.query("DELITE FROM empleado WHERE id_empleado = ?", [id_empleado]);
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({
-                mensaje: `Error al eliminar los datos. ID ${id_empleado} no encontrado.`
-            });
-        }
-        //respuesta sin contenido para indicar exito
+        const { id } = req.params;
+        const [result] = await pool.query('DELETE FROM Empleados WHERE id_empleado = ?', [id]);
+        if (result.affectedRows === 0) return res.status(404).json({ mensaje: 'No encontrado' });
         res.status(204).send();
-    }catch (error) {
-        return res.status(500).json ({
-            mensaje: `Error al eliminar la de empleado.`
-        });
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al eliminar' });
     }
 };
 
-// Actualizar empleado por id
+// PUT actualizar
 export const actualizarEmpleado = async (req, res) => {
     try {
-        const id_empleado = req.params.id_empleado;
-        const { nombre_empleado, apellido_empleado, direccion_empleado, telefono_empleado, email_empleado, puesto_empleado, salario_empleado } = req.body;
-        const [result] = await pool.query (
-            'UPDATE empleados SET nombre_empleado = IFNULL(?, nombre_empleado), apellido_empleado = IFNULL(?, apellido_empleado), direccion_empleado = IFNULL(?, direccion_empleado), telefono_empleado = IFNULL(?, telefono_empleado), email_empleado = IFNULL(?, email_empleado), puesto_empleado = IFNULL(?, puesto_empleado), salario_empleado = IFNULL(?, salario_empleado) WHERE id_empleado = ?',
-            [nombre_empleado, apellido_empleado, direccion_empleado, telefono_empleado, email_empleado, puesto_empleado, salario_empleado, id_empleado]
-        );
-        if (result.affectedRows === 0) {
-            return res.status(404).json({
-                mensaje: `Error al actualizar los datos. ID ${id_empleado} no encontrado.`
-            });
+        const { id } = req.params;
+        const campos = [];
+        const valores = [];
+
+        const camposPermitidos = {
+            primer_nombre: req.body.primer_nombre,
+            segundo_nombre: req.body.segundo_nombre,
+            primer_apellido: req.body.primer_apellido,
+            segundo_apellido: req.body.segundo_apellido,
+            celular: req.body.celular,
+            cargo: req.body.cargo,
+            fecha_contratacion: req.body.fecha_contratacion
+        };
+
+        Object.keys(camposPermitidos).forEach(key => {
+            if (camposPermitidos[key] !== undefined) {
+                campos.push(`${key} = ?`);
+                valores.push(camposPermitidos[key]);
+            }
+        });
+
+        if (campos.length === 0) {
+            return res.status(400).json({ mensaje: 'No se enviaron datos para actualizar' });
         }
-        res.json(result[0]);
+
+        valores.push(id);
+        const sql = `UPDATE Empleados SET ${campos.join(', ')} WHERE id_empleado = ?`;
+
+        const [result] = await pool.query(sql, valores);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ mensaje: 'Empleado no encontrado' });
+        }
+
+        const [empleado] = await pool.query('SELECT * FROM Empleados WHERE id_empleado = ?', [id]);
+        res.json(empleado[0]);
+
     } catch (error) {
-        return res.status(500).json({
-            mensaje: 'Ha ocurrido un error al leer los datos de los empleados.'
+        console.error('ERROR ACTUALIZAR EMPLEADO:', error);
+        res.status(500).json({ 
+            mensaje: 'Error al actualizar empleado',
+            error: error.message,
+            sqlError: error.sqlMessage || error.message
         });
     }
 };

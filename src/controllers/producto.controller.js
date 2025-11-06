@@ -1,4 +1,4 @@
-import { pool } from '../../db_conecction.js';
+import { pool } from '../../db_connection.js';
 
 // Obtener todas las productos
 export const obtenerProductos = async (req, res) => {

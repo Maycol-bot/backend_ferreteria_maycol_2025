@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { 
   obtenerCompras, 
-  obtenerCompra, 
+  obtenerCompraPorId,      // ESTE es el que sí existe en tu controlador
   registrarCompra, 
   actualizarCompra, 
   eliminarCompra 
@@ -9,19 +9,19 @@ import {
 
 const router = Router();
 
-// Obtener todas las compras
+// Obtener TODAS las compras
 router.get('/compras', obtenerCompras);
 
-// Obtener una compra por su ID
-router.get('/compra/:id_compra', obtenerCompra);
+// Obtener UNA compra por ID
+router.get('/compras/:id_compra', obtenerCompraPorId);
 
-// Registrar una nueva compra
-router.post('/compra', registrarCompra);
+// Crear nueva compra
+router.post('/compras', registrarCompra);
 
-// Actualizar una compra existente
-router.put('/compra/:id_compra', actualizarCompra);
+// Actualizar compra
+router.put('/compras/:id_compra', actualizarCompra);
 
-// Eliminar una compra por su ID
-router.delete('/compra/:id_compra', eliminarCompra);
+// Eliminar compra
+router.delete('/compras/:id_compra', eliminarCompra);
 
 export default router;

@@ -16,6 +16,6 @@ routes.post('/registrarcliente', registrarCliente);
 routes.delete('/clientes/:id_cliente', eliminarCliente);
 
 // ruta para actualizar un cliente
-routes.put('/clientes/:id_cliente', actualizarCliente);
+routes.put('/actualizarcliente/:id_cliente', actualizarCliente);
 
 export default routes;

@@ -10,7 +10,7 @@ import {
 const router = Router();
 
 // Obtener todos los detalles de compras
-router.get('/detalle_compras', obtenerDetalles_compras);
+router.get('/detalle_compras', obtenerDetalle_compras);
 
 // Obtener un detalle por su ID
 router.get('/detalle_compra/:id_detalle_compra', obtenerDetalle_compra);
