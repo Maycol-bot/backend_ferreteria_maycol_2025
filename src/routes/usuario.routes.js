@@ -5,7 +5,7 @@ import { obtenerUsuarios, registrarUsuario, actualizarUsuario, eliminarUsuario }
 const router = Router();
 
 router.get('/usuarios', obtenerUsuarios);
-router.post('/usuarios', registrarUsuario);
+router.post('/registrarusuario', registrarUsuario);
 router.put('/usuarios/:id_usuario', actualizarUsuario);
 router.delete('/usuarios/:id_usuario', eliminarUsuario);
 
