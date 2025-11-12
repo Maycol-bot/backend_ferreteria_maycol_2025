@@ -38,4 +38,7 @@ app.use((req, res, next) => {
     });
 });
 
+app.use(express.json({ limit: '10mb' })); // Aumenta a 10 MB
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
+
 export default app;
