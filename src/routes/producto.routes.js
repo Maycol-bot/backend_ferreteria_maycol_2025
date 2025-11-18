@@ -9,7 +9,6 @@ import {
 
 const router = Router();
 
-// ¡AGREGA EL PREFIJO /api AQUÍ!
 router.get('/productos', obtenerProductos);
 router.get('/producto/:id_producto', obtenerProducto);
 router.post('/producto', registrarProducto);
